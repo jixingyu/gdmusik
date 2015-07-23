@@ -1,0 +1,18 @@
+@charset "UTF-8";
+/*
+Theme Name: gd
+Theme URI: http://www.dmeng.net/wordpress-using-child-theme.html
+Description: 使用这个子主题修改多梦主题
+Author: jxy
+Template: dmeng2.0
+Version: 0.1
+*/
+/*
+@media (max-width: 767px) {
+	article.sdarticle .has_post_thumbnail .entry-meta{margin-left:0;}
+	article.sdarticle .entry-thumbnail a{display:block;width:100px;height:66px;top:auto;bottom:15px;}
+	article.sdarticle .entry-thumbnail a img{width:100px;height:66px;}
+	article.sdarticle .entry-content{height:75px;}
+	article .has_post_thumbnail .entry-content{margin-left:110px;}
+}
+*/
