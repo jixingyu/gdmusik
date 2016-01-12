@@ -1,4 +1,25 @@
 <?php
+add_action('admin_init', 'gd_author_upload_image_limit');
+
+function gd_author_upload_image_limit(){
+	//除管理员以外，其他用户都限制
+	// if( !current_user_can( 'manage_options') )
+		add_filter( 'wp_handle_upload_prefilter', 'gd_upload_image_limit' );
+}
+
+function gd_upload_image_limit( $file ){
+	// 检测文件的类型是否是图片
+	$mimes = array( 'image/jpeg', 'image/png', 'image/gif' );
+	// 如果不是图片，直接返回文件
+	if( !in_array( $file['type'], $mimes ) )
+		return $file;
+
+	if ( $file['size'] > 2097152 )
+		$file['error'] = '图片太大了，请不要超过2M';
+
+	return $file;
+}
+
 function gd_post_meta(){
 
 	$output = '<div class="entry-meta">';
