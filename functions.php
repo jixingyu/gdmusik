@@ -78,7 +78,7 @@ add_theme_support( 'custom-header', array(
 
 add_action('load-%e5%a4%9a%e6%a2%a6%e4%b8%bb%e9%a2%98%e8%ae%be%e7%bd%ae_page_dmeng_options_log', 'gd_export_reg');
 function gd_export_reg(){
-	if ($_GET['exportgdreg'] == 1) {
+	if (isset($_GET['exportgdreg']) && $_GET['exportgdreg'] == 1) {
 		global $wpdb;
 		header('Content-Type: application/vnd.ms-excel');
 		header('Content-Disposition: attachment;filename="registration.csv"');
@@ -90,7 +90,7 @@ function gd_export_reg(){
 		fputcsv($fp, $head);
 		$offset = 0;
 		$limit = 1000;
-		while ($regs = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "gd_reg ORDER BY update_time DESC LIMIT $offset,$limit" )) {
+		while ($regs = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "gd_reg ORDER BY create_time DESC LIMIT $offset,$limit" )) {
 			$offset += $limit;
 			foreach ($regs as $reg) {
 				fputcsv($fp, array(

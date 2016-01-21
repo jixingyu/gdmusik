@@ -74,23 +74,30 @@ if($tab=='gdreg'){
 	
 	$regs = $wpdb->get_results( "SELECT * ".$sql_where." ORDER BY update_time DESC LIMIT $offset,$limit" );
 	if( $regs ){
-		$output = '<p><input type="button" onclick="exportgdreg();" class="button" id="export-gdreg" value="导出所有报名信息" /></p>';
+		$output = '<p><input type="button" onclick="exportgdreg();" class="button" id="export-gdreg" value="导出所有报名信息" /></p>'
+			    . '<table class="wp-list-table widefat fixed"><thead><tr><th>用户</th><th>邮箱</th><th>姓名</th><th>报名时间</th></tr></thead><tbody>';
 		foreach( $regs as $regk => $reg ){
-			// $output .= '<table class="wp-list-table widefat fixed"><thead><tr><th></th><th>b</th></tr></thead><tbody>';
-			// if ($regk % 2 == 0) {
-			// 	$output .= '<tr class="alternate"><td>a</td><td>b</td></tr>';
-			// } else {
-			// 	$output .= sprintf('<tr><td>%s</td><td>%s</td></tr>', get_the_author_meta('display_name', $reg->user_id), );
-			// }
-			// $output .= '</tbody></table>';
-			$output .= '<p>'.sprintf( '%s参加了报名 - 姓名：%s，邮箱：%s，报名时间：%s，修改时间：%s', 
-									'<a href="'.dmeng_get_user_url('profile', $reg->user_id).'" target="_blank">'.get_the_author_meta('display_name', $reg->user_id).'</a>',
-									$reg->realname,
-									$reg->email,
-									$reg->create_time,
-									$reg->update_time ).
-									'</p>';
+			if ($regk % 2 == 0) {
+				$reg_format = '<tr class="alternate"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
+			} else {
+				$reg_format = '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>';
+			}
+			$output .= sprintf(
+				$reg_format,
+				get_the_author_meta('display_name', $reg->user_id),
+				htmlspecialchars($reg->email),
+				htmlspecialchars($reg->realname),
+				$reg->create_time
+			);
+			// $output .= '<p>'.sprintf( '%s参加了报名 - 姓名：%s，邮箱：%s，报名时间：%s，修改时间：%s', 
+			// 						'<a href="'.dmeng_get_user_url('profile', $reg->user_id).'" target="_blank">'.get_the_author_meta('display_name', $reg->user_id).'</a>',
+			// 						$reg->realname,
+			// 						$reg->email,
+			// 						$reg->create_time,
+			// 						$reg->update_time ).
+			// 						'</p>';
 		}
+		$output .= '</tbody></table>';
 	}
 	
 }
